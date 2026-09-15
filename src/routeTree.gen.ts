@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DeputadosIndexRouteImport } from './routes/deputados.index'
+import { Route as ProposicoesIndexRouteImport } from './routes/proposicoes.index'
+import { Route as VotacoesIndexRouteImport } from './routes/votacoes.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeputadosIndexRoute = DeputadosIndexRouteImport.update({
+  id: '/deputados/',
+  path: '/deputados/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProposicoesIndexRoute = ProposicoesIndexRouteImport.update({
+  id: '/proposicoes/',
+  path: '/proposicoes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VotacoesIndexRoute = VotacoesIndexRouteImport.update({
+  id: '/votacoes/',
+  path: '/votacoes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/deputados/': typeof DeputadosIndexRoute
+  '/proposicoes/': typeof ProposicoesIndexRoute
+  '/votacoes/': typeof VotacoesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/deputados': typeof DeputadosIndexRoute
+  '/proposicoes': typeof ProposicoesIndexRoute
+  '/votacoes': typeof VotacoesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/deputados/': typeof DeputadosIndexRoute
+  '/proposicoes/': typeof ProposicoesIndexRoute
+  '/votacoes/': typeof VotacoesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/deputados/' | '/proposicoes/' | '/votacoes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/deputados' | '/proposicoes' | '/votacoes'
+  id: '__root__' | '/' | '/deputados/' | '/proposicoes/' | '/votacoes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DeputadosIndexRoute: typeof DeputadosIndexRoute
+  ProposicoesIndexRoute: typeof ProposicoesIndexRoute
+  VotacoesIndexRoute: typeof VotacoesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/deputados/': {
+      id: '/deputados/'
+      path: '/deputados'
+      fullPath: '/deputados/'
+      preLoaderRoute: typeof DeputadosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proposicoes/': {
+      id: '/proposicoes/'
+      path: '/proposicoes'
+      fullPath: '/proposicoes/'
+      preLoaderRoute: typeof ProposicoesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/votacoes/': {
+      id: '/votacoes/'
+      path: '/votacoes'
+      fullPath: '/votacoes/'
+      preLoaderRoute: typeof VotacoesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DeputadosIndexRoute: DeputadosIndexRoute,
+  ProposicoesIndexRoute: ProposicoesIndexRoute,
+  VotacoesIndexRoute: VotacoesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
